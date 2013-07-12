@@ -15,7 +15,7 @@ typedef struct CodonMemoryAllocatorStack {
     // the number of references to this stack
     int referenceCount;
     // reference to a stack, null if not allocated
-    CodonStack* stack;
+    CodonStack stack;
 } CodonMemoryAllocatorStack;
 
 typedef struct CodonMemoryAllocator {

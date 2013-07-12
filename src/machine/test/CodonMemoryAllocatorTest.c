@@ -16,7 +16,7 @@ void printAllocatorState(CodonMemoryAllocator* memoryAllocator) {
 		if (alloc) {
 			CodonMemoryAllocatorStack* stack = value.value;
 			refCount = stack->referenceCount;
-			pointer = (int)stack->stack;
+			pointer = (int)(&(stack->stack));
 		}
 
 		printf("index %i ~ alloc %i ~ refCount %i ~ ptr %i\n", i, alloc, refCount, pointer);
