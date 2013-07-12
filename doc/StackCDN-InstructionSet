@@ -1,0 +1,146 @@
+StackCDN VERSION 1
+this document specifies the language ansd implementation details of StackCDN
+an assembly-esq language designed for evolutionary programming.
+*******************************************************************************
+
+MACHINE SPECIFICATIONS
+===============================================================================
+A new machine and excuting environment is created when a program is loaded
+
+-------------------------------------------------------------------------------
+WORDSIZE  the size of the machine word, in bytes
+BYTE  one byte
+
+-------------------------------------------------------------------------------
+Array of StackCDNexe instructions (a program):
+ 
+ Line
+  Instruction  (WORDSIZE) instruction that determines the 
+
+ Instruction Pointer: (WORDSIZE) pointing at the currently executing instruction.
+
+-------------------------------------------------------------------------------
+Stacks
+
+ defined in the currently 
+
+-------------------------------------------------------------------------------
+all variables are double sized floating point integers
+
+StackCDNtxt
+ marker-based assembly language
+===============================================================================
+INSTRUCTION
+1 byte makes up an instruction type
+
+LABEL
+ N bytes make up a label-type
+each marker determines the
+
+LABELMATCH
+ N bytes
+ FLOAT  precision number specifing the fraction of bits that must match
+ BYTE   up/down direction of search
+-or-
+ NULL  nothing
+
+FLOAT
+double precision floating point integer, typically used as a variable
+
+BYTE
+a single byte, usually used as a flag or switch
+
+SPECIFICATION
+-------------------------------------------------------------------------------
+key
+ *INSTRUCTION_CODE
+  ephemeral, eliminated during compile phase
+
+ #label
+ @label-matcher
+ $literal
+
+ ??? (later)
+ %literal or label
+
+-------------------------------------------------------------------------------
+***** NOP
+0000 NOP
+
+***** CODON
+0100 CODONLABEL
+labels the start of a new "Codon" analogous to a condon in DNA, a contiguous 
+unit of code. Uses label to connect and "breed" with closely related genes
+
+***** JUMPING
+0200 *JUMPLABEL #label
+label to jump to
+1010 JUMPTO @jumplabel
+jumps to the label
+
+***** CONDITIONALS
+0300 IF %variable
+if the contents of the register are non-zero, then jump over the next instruction
+
+***** VARIABLES
+0400    VARLABEL        #label
+initialize a new variable with a given label
+0401    NEWSTACK        @variable
+create a new stack, dereference old stack
+0402    REFERENCE       @destination        @source
+link a VARLABEL to the stack of another varlabel, if a stack is no longer linked to, it will be freed
+
+***** IO
+0500    IOSIZE          @ioindex            @destination
+0500    IOPOP           @ioindex            @destination
+0500    IOPUSH          @ioindex            @value
+
+***** PUSH AND POP
+0600    PUSHLITERAL     @variable           $value
+push a literal value
+0601    POP             @variable
+pop a value off of the stack (do nothing)
+0601    POPPUSH         @destination        @source
+pop a variable off of one stack and push it onto another stack
+0602    PEEKPUSH        @destination        @source
+copy a variable off of one stack and push it onto another stack
+
+***** SINGLE-OPERAND ARITHEMATIC OPERATIONS
+0700    NEGATE          @variable
+negate the top value of a stack
+0701    INVERT          @variable
+invert the top value of a stack
+0701    FLOOR           @variable
+floor the top value of a stack
+0702    SWAPTWO         @variable
+swap the top 2 values on a stack
+
+***** TWO-OPERAND ARITHMATIC OPERATIONS
+0000    ADD             @variable
+add the top two values on a stack and push the result to the stack
+0000    SUBTRACT        @variable
+subtract the top values on a stack and push the result to the stack
+0000    MULTIPLY        @variable
+multiply the top values on a stack and push the result to the stack
+0000    DIVIDE          @variable
+divide the top values on a stack and push the result to the stack
+0000    MODULUS         @variable
+mod the top values on a stack and push the result to the stack
+
+***** COMPARISION OPERATIONS
+0000    LESSTHAN        @variable
+if s0 < s1 then push 1 else 0
+0000    GREATERTHAN     @variable
+if s0 > s1 then push 1 else 0
+
+***** SINGLE-OPERAND LOGICAL OPERATIONS
+0000    NOT             @variable
+logical not of the top value of the stack
+
+***** TWO-OPERAND LOGICAL OPERATIONS
+0000    AND             @variable
+logical AND of the top two values on the stack
+0000    OR              @variable
+logical OR of the top two values on the stack
+0000    XOR             @variable
+logical XOR of the top two values on the stack

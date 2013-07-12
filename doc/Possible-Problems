@@ -1,0 +1,10 @@
+Use reddit API to get the text of a comment, it's parent and child comments, and the text of the main comment and the highest rated comment, as well as other data (url, subreddit ... etc)
+
+Algorithm attempts to calculate kharma score of comment
+
+possible?? algorithm attempts to generate a new comment, score is based on similarity to existing comment
+
+Sorting algorithm ---  sort items in stack
+
+Ecology simulation -- attempt speciation
+  
